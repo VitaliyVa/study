@@ -1,4 +1,4 @@
-// Рівень складності (сходинки 1-7, як у плані навчання)
+// Рівень складності (поки використовуємо лише рівень 1)
 export type Difficulty = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 // Підказка на елементі формули
@@ -13,11 +13,24 @@ export interface Token {
   hint?: Hint;
 }
 
+// Простий приклад усередині модалки "Я не розумію"
+export interface HelpExample {
+  latex: string;
+  note: string;
+}
+
+// Вміст модального вікна "Я не розумію" для кроку
+export interface StepHelp {
+  plain: string; // ще простіше пояснення «на пальцях»
+  examples?: HelpExample[]; // елементарні приклади того ж правила
+}
+
 // Один крок покрокового рішення
 export interface Step {
   title: string; // що робимо на цьому кроці
-  latex: string; // стан рішення (рендериться як блок)
-  explanation: string; // чому/як
+  tokens: Token[]; // інтерактивна формула кроку (наведення = підказка)
+  explanation: string; // чому/як (текст під формулою)
+  help?: StepHelp; // що показати, якщо студент натисне "Я не розумію"
 }
 
 export interface Problem {

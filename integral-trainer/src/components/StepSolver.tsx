@@ -8,10 +8,13 @@ import {
   Lightbulb,
   RotateCcw,
   CheckCircle2,
+  MousePointerClick,
 } from "lucide-react";
 import clsx from "clsx";
 import type { Step } from "@/lib/types";
 import { KatexBlock } from "./KatexBlock";
+import { Equation } from "./Equation";
+import { HelpDialog } from "./HelpDialog";
 
 export function StepSolver({ steps, answer }: { steps: Step[]; answer: string }) {
   const [revealed, setRevealed] = useState(false);
@@ -62,7 +65,7 @@ export function StepSolver({ steps, answer }: { steps: Step[]; answer: string })
       </div>
 
       {/* Сам крок */}
-      <div className="min-h-[170px]">
+      <div className="min-h-[200px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={i}
@@ -71,13 +74,25 @@ export function StepSolver({ steps, answer }: { steps: Step[]; answer: string })
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.2 }}
           >
+            {/* Інтерактивна формула кроку — наводься на підсвічені частини */}
             <div className="overflow-x-auto rounded-xl bg-background/60 px-4 py-6">
-              <KatexBlock latex={step.latex} display className="text-xl sm:text-2xl" />
+              <Equation tokens={step.tokens} size="md" />
             </div>
-            <p className="mt-4 flex gap-2 text-[15px] leading-relaxed text-foreground/85">
+            <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-xs text-muted">
+              <MousePointerClick className="h-3.5 w-3.5" />
+              Наведи (або тапни) на підсвічені частини формули
+            </p>
+            <p className="mt-3 flex gap-2 text-[15px] leading-relaxed text-foreground/85">
               <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-warning" />
               {step.explanation}
             </p>
+
+            {/* Кнопка "Я не розумію" — відкриває простіше пояснення */}
+            {step.help && (
+              <div className="mt-4">
+                <HelpDialog help={step.help} stepTitle={step.title} />
+              </div>
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
