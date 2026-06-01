@@ -19,6 +19,11 @@ npm install
 npm run dev      # http://localhost:3000
 ```
 
+### Як додавати контент
+
+Правила створення методів, задач, кроків, підказок і формул (щоб тримати планку
+навчання) — у [`integral-trainer/CONTENT_GUIDE.md`](integral-trainer/CONTENT_GUIDE.md).
+
 ### Деплой
 
 Автоматичний через GitHub Actions ([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml))
