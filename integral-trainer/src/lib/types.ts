@@ -19,10 +19,19 @@ export interface HelpExample {
   note: string;
 }
 
+// Міні-самоперевірка всередині модалки
+export interface MiniCheck {
+  question: string; // текстове запитання
+  answer: string; // відповідь (latex), показується по кліку
+}
+
 // Вміст модального вікна "Я не розумію" для кроку
 export interface StepHelp {
-  plain: string; // ще простіше пояснення «на пальцях»
+  plain: string; // пояснення «на пальцях»
   examples?: HelpExample[]; // елементарні приклади того ж правила
+  simpler?: string; // ЩЕ простіший рівень (розкривається кнопкою)
+  numeric?: HelpExample[]; // те саме на конкретних числах (без іксів)
+  check?: MiniCheck; // міні-самоперевірка з прихованою відповіддю
 }
 
 // Один крок покрокового рішення

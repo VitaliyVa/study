@@ -120,7 +120,11 @@ export function StepSolver({
 
               {step.help && (
                 <div className="mt-3">
-                  <HelpDialog help={step.help} stepTitle={step.title} />
+                  <HelpDialog
+                    help={step.help}
+                    stepTitle={step.title}
+                    methodId={step.methodIds?.[0]}
+                  />
                 </div>
               )}
             </motion.li>

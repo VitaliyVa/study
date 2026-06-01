@@ -200,7 +200,8 @@ export default function TheoryPage() {
           {methods.map((m) => (
             <div
               key={m.id}
-              className="rounded-xl border bg-background/40 p-4"
+              id={`method-${m.id}`}
+              className="scroll-mt-24 rounded-xl border bg-background/40 p-4"
               style={{ borderColor: `${m.color}40` }}
             >
               <div className="flex items-center gap-2">
