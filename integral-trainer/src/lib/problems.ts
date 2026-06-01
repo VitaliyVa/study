@@ -5,6 +5,14 @@ export const levels: Level[] = [
   { difficulty: 1, name: "Гола формула", summary: "Степенева функція xⁿ — одне правило в лоб" },
 ];
 
+// ── Кольорове кодування (кольори тягнуться через усі кроки) ──
+// co — число (коефіцієнт), бурштинове
+// po — степінь (показник), зелене
+export const COLOR_COEF = "#fbbf24";
+export const COLOR_POW = "#34d399";
+const co = (s: string) => `\\textcolor{${COLOR_COEF}}{${s}}`;
+const po = (s: string) => `\\textcolor{${COLOR_POW}}{${s}}`;
+
 // Спільні підказки для повторюваних елементів
 const hintIntegral = {
   term: "∫ — знак інтеграла",
@@ -29,7 +37,7 @@ export const problems: Problem[] = [
       { latex: "\\int", hint: hintIntegral },
       { latex: "(" },
       {
-        latex: "6x^4",
+        latex: `${co("6")}x^{${po("4")}}`,
         hint: {
           term: "6x⁴",
           text: "6 — число (множник). x⁴ — степінь. Правило: степінь +1, а число поділимо на новий степінь.",
@@ -37,7 +45,7 @@ export const problems: Problem[] = [
       },
       { latex: "+", hint: hintPlus },
       {
-        latex: "3x^2",
+        latex: `${co("3")}x^{${po("2")}}`,
         hint: { term: "3x²", text: "Те саме правило окремо: 3 — множник, x² — степінь." },
       },
       { latex: ")" },
@@ -48,17 +56,17 @@ export const problems: Problem[] = [
         title: "Розбиваємо на два простіші",
         tokens: [
           {
-            latex: "\\int (6x^4 + 3x^2)\\,dx",
+            latex: `\\int (${co("6")}x^{${po("4")}} + ${co("3")}x^{${po("2")}})\\,dx`,
             hint: { term: "наш приклад", text: "Під інтегралом — сума двох доданків." },
           },
           { latex: "=" },
           {
-            latex: "\\int 6x^4\\,dx",
+            latex: `\\int ${co("6")}x^{${po("4")}}\\,dx`,
             hint: { term: "перший окремо", text: "Беремо лише 6x⁴." },
           },
           { latex: "+" },
           {
-            latex: "\\int 3x^2\\,dx",
+            latex: `\\int ${co("3")}x^{${po("2")}}\\,dx`,
             hint: { term: "другий окремо", text: "І лише 3x²." },
           },
         ],
@@ -79,12 +87,12 @@ export const problems: Problem[] = [
         title: "Виносимо числа наперед",
         tokens: [
           {
-            latex: "6\\int x^4\\,dx",
+            latex: `${co("6")}\\int x^{${po("4")}}\\,dx`,
             hint: { term: "6 вийшла наперед", text: "Число-множник можна винести за знак інтеграла — воно не заважає." },
           },
           { latex: "+" },
           {
-            latex: "3\\int x^2\\,dx",
+            latex: `${co("3")}\\int x^{${po("2")}}\\,dx`,
             hint: { term: "3 теж наперед", text: "Лишається чистий x² під інтегралом." },
           },
         ],
@@ -100,12 +108,12 @@ export const problems: Problem[] = [
         title: "Застосовуємо головну формулу",
         tokens: [
           {
-            latex: "6\\cdot\\frac{x^{5}}{5}",
+            latex: `${co("6")}\\cdot\\frac{x^{${po("5")}}}{${po("5")}}`,
             hint: { term: "x⁴ → x⁵, ділимо на 5", text: "Степінь побільшав на 1 (4→5). Ділимо на новий степінь 5." },
           },
           { latex: "+" },
           {
-            latex: "3\\cdot\\frac{x^{3}}{3}",
+            latex: `${co("3")}\\cdot\\frac{x^{${po("3")}}}{${po("3")}}`,
             hint: { term: "x² → x³, ділимо на 3", text: "Те саме: 2→3, ділимо на 3." },
           },
         ],
@@ -123,12 +131,12 @@ export const problems: Problem[] = [
         title: "Спрощуємо числа",
         tokens: [
           {
-            latex: "\\frac{6}{5}x^{5}",
+            latex: `\\frac{${co("6")}}{${po("5")}}x^{${po("5")}}`,
             hint: { term: "чому 6/5?", text: "6 на 5 не ділиться рівно → лишаємо дробом 6/5." },
           },
           { latex: "+" },
           {
-            latex: "x^{3}",
+            latex: `x^{${po("3")}}`,
             hint: { term: "чому просто x³?", text: "3 поділити на 3 = 1, а одиницю перед іксом не пишуть." },
           },
           { latex: "+" },
@@ -151,12 +159,12 @@ export const problems: Problem[] = [
         title: "Перевірка похідною",
         tokens: [
           {
-            latex: "\\left(\\tfrac{6}{5}x^5 + x^3 + C\\right)'",
+            latex: `\\left(\\tfrac{${co("6")}}{${po("5")}}x^{${po("5")}} + x^{${po("3")}} + C\\right)'`,
             hint: { term: "беремо похідну", text: "Похідна — зворотна дія до інтеграла." },
           },
           { latex: "=" },
           {
-            latex: "6x^4 + 3x^2",
+            latex: `${co("6")}x^{${po("4")}} + ${co("3")}x^{${po("2")}}`,
             hint: { term: "= початкова функція!", text: "Збіглося з тим, що було під інтегралом → відповідь правильна." },
           },
         ],
@@ -171,7 +179,12 @@ export const problems: Problem[] = [
         },
       },
     ],
-    answer: "\\frac{6}{5}x^{5} + x^{3} + C",
+    answer: `\\frac{${co("6")}}{${po("5")}}x^{${po("5")}} + x^{${po("3")}} + C`,
+    pitfalls: [
+      "Забути **+ C** — найчастіша втрата балів. Інтеграл без сталої вважається неповним.",
+      "Переплутати з похідною: при інтегруванні степінь **росте** (x⁴→x⁵), а не падає.",
+      "Поділити на старий степінь: ділимо на **новий** (5), а не на 4.",
+    ],
   },
 
   // ─────────────────────────── Другий приклад того ж типу ───────────────────────────
@@ -182,10 +195,10 @@ export const problems: Problem[] = [
     problemTokens: [
       { latex: "\\int", hint: hintIntegral },
       { latex: "(" },
-      { latex: "2x^3", hint: { term: "2x³", text: "Число 2 виносимо, x³ — за степеневим правилом." } },
+      { latex: `${co("2")}x^{${po("3")}}`, hint: { term: "2x³", text: "Число 2 виносимо, x³ — за степеневим правилом." } },
       { latex: "+", hint: hintPlus },
       {
-        latex: "5",
+        latex: `${co("5")}`,
         hint: { term: "5 — стала", text: "Просто число без ікса. Його інтеграл = 5x." },
       },
       { latex: ")" },
@@ -195,11 +208,11 @@ export const problems: Problem[] = [
       {
         title: "Розбиваємо на два простіші",
         tokens: [
-          { latex: "\\int (2x^3 + 5)\\,dx", hint: { term: "наш приклад", text: "Сума: степінь 2x³ і стала 5." } },
+          { latex: `\\int (${co("2")}x^{${po("3")}} + ${co("5")})\\,dx`, hint: { term: "наш приклад", text: "Сума: степінь 2x³ і стала 5." } },
           { latex: "=" },
-          { latex: "\\int 2x^3\\,dx", hint: { term: "степінь окремо", text: "Беремо 2x³." } },
+          { latex: `\\int ${co("2")}x^{${po("3")}}\\,dx`, hint: { term: "степінь окремо", text: "Беремо 2x³." } },
           { latex: "+" },
-          { latex: "\\int 5\\,dx", hint: { term: "сталу окремо", text: "Беремо число 5." } },
+          { latex: `\\int ${co("5")}\\,dx`, hint: { term: "сталу окремо", text: "Беремо число 5." } },
         ],
         explanation: "Два доданки — два окремі інтеграли.",
         help: {
@@ -210,11 +223,11 @@ export const problems: Problem[] = [
       {
         title: "Інтегруємо степінь",
         tokens: [
-          { latex: "\\int 2x^3\\,dx" },
+          { latex: `\\int ${co("2")}x^{${po("3")}}\\,dx` },
           { latex: "=" },
-          { latex: "2\\cdot\\frac{x^4}{4}", hint: { term: "x³ → x⁴, ділимо на 4", text: "Степінь +1 (3→4), ділимо на 4." } },
+          { latex: `${co("2")}\\cdot\\frac{x^{${po("4")}}}{${po("4")}}`, hint: { term: "x³ → x⁴, ділимо на 4", text: "Степінь +1 (3→4), ділимо на 4." } },
           { latex: "=" },
-          { latex: "\\frac{x^4}{2}", hint: { term: "2/4 = 1/2", text: "Скорочуємо: 2 поділити на 4 = 1/2." } },
+          { latex: `\\frac{x^{${po("4")}}}{${co("2")}}`, hint: { term: "2/4 = 1/2", text: "Скорочуємо: 2 поділити на 4 = 1/2." } },
         ],
         explanation: "x³ → x⁴, ділимо на новий степінь 4. Дріб 2/4 скорочується до 1/2.",
         help: {
@@ -225,9 +238,9 @@ export const problems: Problem[] = [
       {
         title: "Інтегруємо сталу",
         tokens: [
-          { latex: "\\int 5\\,dx" },
+          { latex: `\\int ${co("5")}\\,dx` },
           { latex: "=" },
-          { latex: "5x", hint: { term: "число → число·x", text: "∫a dx = a·x. Перевір: похідна (5x)′ = 5." } },
+          { latex: `${co("5")}x`, hint: { term: "число → число·x", text: "∫a dx = a·x. Перевір: похідна (5x)′ = 5." } },
         ],
         explanation: "Інтеграл сталої — це та сама стала, помножена на x.",
         help: {
@@ -242,9 +255,9 @@ export const problems: Problem[] = [
       {
         title: "Збираємо відповідь",
         tokens: [
-          { latex: "\\frac{x^4}{2}", hint: { term: "від степеня", text: "Результат інтегрування 2x³." } },
+          { latex: `\\frac{x^{${po("4")}}}{${co("2")}}`, hint: { term: "від степеня", text: "Результат інтегрування 2x³." } },
           { latex: "+" },
-          { latex: "5x", hint: { term: "від сталої", text: "Результат інтегрування 5." } },
+          { latex: `${co("5")}x`, hint: { term: "від сталої", text: "Результат інтегрування 5." } },
           { latex: "+" },
           { latex: "C", hint: { term: "+ C обов'язково", text: "Без сталої відповідь неповна." } },
         ],
@@ -254,7 +267,12 @@ export const problems: Problem[] = [
         },
       },
     ],
-    answer: "\\frac{x^4}{2} + 5x + C",
+    answer: `\\frac{x^{${po("4")}}}{${co("2")}} + ${co("5")}x + C`,
+    pitfalls: [
+      "Стала 5 **не зникає**: ∫5dx = 5x, а не 5.",
+      "Забути **+ C** у кінці.",
+      "Не скоротити 2/4 до 1/2 (не помилка, але краще спрощувати).",
+    ],
   },
 ];
 

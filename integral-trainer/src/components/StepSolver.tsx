@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronDown,
@@ -14,13 +14,39 @@ import type { Step } from "@/lib/types";
 import { KatexBlock } from "./KatexBlock";
 import { Equation } from "./Equation";
 import { HelpDialog } from "./HelpDialog";
+import { markSolved } from "@/lib/progress";
 
-export function StepSolver({ steps, answer }: { steps: Step[]; answer: string }) {
+export function StepSolver({
+  steps,
+  answer,
+  problemId,
+}: {
+  steps: Step[];
+  answer: string;
+  problemId: string;
+}) {
   // Скільки кроків уже показано (0 = рішення ще не почато)
   const [shown, setShown] = useState(0);
+  const celebrated = useRef(false);
 
   const total = steps.length;
   const allShown = shown >= total;
+
+  // Коли всі кроки розкрито — конфеті + позначаємо задачу розв'язаною (один раз)
+  useEffect(() => {
+    if (!allShown || celebrated.current) return;
+    celebrated.current = true;
+    markSolved(problemId);
+    void (async () => {
+      const confetti = (await import("canvas-confetti")).default;
+      confetti({
+        particleCount: 90,
+        spread: 70,
+        origin: { y: 0.7 },
+        colors: ["#818cf8", "#34d399", "#fbbf24"],
+      });
+    })();
+  }, [allShown, problemId]);
 
   if (shown === 0) {
     return (

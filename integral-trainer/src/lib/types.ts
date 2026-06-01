@@ -40,6 +40,7 @@ export interface Problem {
   problemTokens: Token[]; // інтерактивне рівняння-умова
   steps: Step[]; // покрокове рішення
   answer: string; // фінальна відповідь (latex)
+  pitfalls?: string[]; // типові помилки на цій задачі
 }
 
 export interface Level {

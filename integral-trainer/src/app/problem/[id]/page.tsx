@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, MousePointerClick } from "lucide-react";
-import { getProblem, problems } from "@/lib/problems";
+import { getProblem, problems, COLOR_COEF, COLOR_POW } from "@/lib/problems";
 import { Equation } from "@/components/Equation";
 import { StepSolver } from "@/components/StepSolver";
 import { DifficultyBadge } from "@/components/DifficultyBadge";
+import { AnswerReveal } from "@/components/AnswerReveal";
+import { Pitfalls } from "@/components/Pitfalls";
 
 // Статична генерація всіх сторінок задач
 export function generateStaticParams() {
@@ -40,13 +42,30 @@ export default async function ProblemPage({
         <Equation tokens={problem.problemTokens} />
       </div>
 
-      <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-sm text-muted">
-        <MousePointerClick className="h-4 w-4" />
-        Наведи (або тапни) на підсвічені елементи формули — там підказки
-      </p>
+      {/* Легенда кольорів + підказка про наведення */}
+      <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-sm text-muted">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full" style={{ background: COLOR_COEF }} />
+          число (коефіцієнт)
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full" style={{ background: COLOR_POW }} />
+          степінь
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <MousePointerClick className="h-4 w-4" />
+          наведи на підсвічене — підказка
+        </span>
+      </div>
+
+      {/* Спробуй сам (відповідь під блюром) */}
+      <AnswerReveal answer={problem.answer} />
 
       {/* Покрокове рішення */}
-      <StepSolver steps={problem.steps} answer={problem.answer} />
+      <StepSolver steps={problem.steps} answer={problem.answer} problemId={problem.id} />
+
+      {/* Типові помилки */}
+      {problem.pitfalls && <Pitfalls items={problem.pitfalls} />}
     </div>
   );
 }
