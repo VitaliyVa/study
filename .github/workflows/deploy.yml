@@ -31,7 +31,9 @@ jobs:
           cache: npm
           cache-dependency-path: integral-trainer/package-lock.json
 
-      - run: npm ci
+      # npm install (а не ci): lock-файл згенеровано на Windows і не містить
+      # linux-only optional-залежностей (@emnapi/*), через що `npm ci` падає.
+      - run: npm install --no-audit --no-fund
 
       - name: Build static export
         run: npm run build
