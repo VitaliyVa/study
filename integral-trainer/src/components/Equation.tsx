@@ -9,16 +9,26 @@ import { MathToken } from "./MathToken";
 export function Equation({
   tokens,
   size = "lg",
+  align = "center",
 }: {
   tokens: Token[];
-  size?: "lg" | "md";
+  size?: "sm" | "md" | "lg";
+  align?: "center" | "start";
 }) {
+  const sizeCls =
+    size === "lg"
+      ? "text-3xl sm:text-4xl"
+      : size === "md"
+        ? "text-2xl sm:text-3xl"
+        : "text-lg sm:text-xl";
+
   return (
     <Tooltip.Provider delayDuration={100}>
       <div
         className={clsx(
-          "flex flex-wrap items-center justify-center gap-x-0.5 gap-y-2 leading-none",
-          size === "lg" ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl"
+          "flex flex-wrap items-center gap-x-0.5 gap-y-2 leading-none",
+          align === "center" ? "justify-center" : "justify-start",
+          sizeCls
         )}
       >
         {tokens.map((t, i) => (
