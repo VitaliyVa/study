@@ -1,0 +1,18 @@
+# dependencies
+**/node_modules/
+
+# next.js build output
+**/.next/
+**/out/
+
+# playwright artifacts
+**/.playwright-mcp/
+
+# misc
+.DS_Store
+*.pem
+*.log
+*.tsbuildinfo
+
+# env
+.env*
