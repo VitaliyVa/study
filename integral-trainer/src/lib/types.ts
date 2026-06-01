@@ -31,6 +31,7 @@ export interface Step {
   tokens: Token[]; // інтерактивна формула кроку (наведення = підказка)
   explanation: string; // чому/як (текст під формулою)
   help?: StepHelp; // що показати, якщо студент натисне "Я не розумію"
+  methodIds?: string[]; // які методи застосовано на цьому кроці
 }
 
 export interface Problem {
@@ -41,6 +42,7 @@ export interface Problem {
   steps: Step[]; // покрокове рішення
   answer: string; // фінальна відповідь (latex)
   pitfalls?: string[]; // типові помилки на цій задачі
+  methodIds?: string[]; // методи, якими розв'язується задача загалом
 }
 
 export interface Level {

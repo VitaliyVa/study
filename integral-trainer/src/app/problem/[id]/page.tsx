@@ -7,6 +7,7 @@ import { StepSolver } from "@/components/StepSolver";
 import { DifficultyBadge } from "@/components/DifficultyBadge";
 import { AnswerReveal } from "@/components/AnswerReveal";
 import { Pitfalls } from "@/components/Pitfalls";
+import { MethodBadge } from "@/components/MethodBadge";
 
 // Статична генерація всіх сторінок задач
 export function generateStaticParams() {
@@ -57,6 +58,16 @@ export default async function ProblemPage({
           наведи на підсвічене — підказка
         </span>
       </div>
+
+      {/* Методи, якими розв'язується задача */}
+      {problem.methodIds && problem.methodIds.length > 0 && (
+        <div className="mt-5 flex flex-wrap items-center gap-2">
+          <span className="text-sm text-muted">Розв&apos;язується методами:</span>
+          {problem.methodIds.map((mid) => (
+            <MethodBadge key={mid} id={mid} label={false} />
+          ))}
+        </div>
+      )}
 
       {/* Спробуй сам (відповідь під блюром) */}
       <AnswerReveal answer={problem.answer} />

@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowLeftRight, Lightbulb, Sparkles, Palette } from "lucide-react";
+import { ArrowLeft, ArrowLeftRight, Lightbulb, Sparkles, Palette, Wrench } from "lucide-react";
 import { KatexBlock } from "@/components/KatexBlock";
 import { Equation } from "@/components/Equation";
 import { Term } from "@/components/Term";
 import { COLOR_COEF, COLOR_POW } from "@/lib/problems";
+import { methods } from "@/lib/methods";
 import type { Token } from "@/lib/types";
 
 // Кольори для інтегрування частинами
@@ -182,6 +183,49 @@ export default function TheoryPage() {
             ]}
             size="md"
           />
+        </div>
+      </section>
+
+      {/* Методи та прийоми розв'язування */}
+      <section className="rounded-2xl border border-border bg-surface/50 p-5 sm:p-6">
+        <h2 className="flex items-center gap-2 text-lg font-semibold">
+          <Wrench className="h-5 w-5 text-accent" />
+          Методи та прийоми розв&apos;язування
+        </h2>
+        <p className="mt-1 text-sm text-muted">
+          Набір інструментів. У кожній задачі видно, який метод застосовано на
+          кроці — наведи на бейдж «Метод».
+        </p>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          {methods.map((m) => (
+            <div
+              key={m.id}
+              className="rounded-xl border bg-background/40 p-4"
+              style={{ borderColor: `${m.color}40` }}
+            >
+              <div className="flex items-center gap-2">
+                <span
+                  className="grid h-7 w-7 shrink-0 place-items-center rounded-lg"
+                  style={{ background: `${m.color}22`, color: m.color }}
+                >
+                  <Wrench className="h-4 w-4" />
+                </span>
+                <h3 className="font-semibold" style={{ color: m.color }}>
+                  {m.name}
+                </h3>
+              </div>
+              <p className="mt-2 text-sm font-medium text-foreground/90">{m.short}</p>
+              <p className="mt-1 text-xs text-muted">Коли: {m.when}</p>
+              <p className="mt-2 text-[14px] leading-relaxed text-foreground/80">
+                {m.description}
+              </p>
+              {m.example && (
+                <div className="mt-3 overflow-x-auto rounded-lg bg-background/60 px-3 py-2">
+                  <KatexBlock latex={m.example} />
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </section>
 

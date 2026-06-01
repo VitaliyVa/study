@@ -14,6 +14,7 @@ import type { Step } from "@/lib/types";
 import { KatexBlock } from "./KatexBlock";
 import { Equation } from "./Equation";
 import { HelpDialog } from "./HelpDialog";
+import { MethodBadge } from "./MethodBadge";
 import { markSolved } from "@/lib/progress";
 
 export function StepSolver({
@@ -93,11 +94,14 @@ export function StepSolver({
               transition={{ duration: 0.25 }}
               className="rounded-xl border border-border bg-background/40 p-4 sm:p-5"
             >
-              <div className="mb-3 flex items-center gap-2">
+              <div className="mb-3 flex flex-wrap items-center gap-2">
                 <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-accent-strong/20 text-xs font-bold text-accent">
                   {idx + 1}
                 </span>
                 <span className="text-sm font-medium text-accent">{step.title}</span>
+                {step.methodIds?.map((mid) => (
+                  <MethodBadge key={mid} id={mid} label={false} />
+                ))}
               </div>
 
               {/* Інтерактивна формула — наводься на підсвічені частини */}
